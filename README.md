@@ -77,7 +77,7 @@ OBS: no caso do seu linux ser de uma distro não debian-based, substitua apt-get
 
  -Método para colocar 0 para todos os alunos na coluna do dia em questão antes de iniciar a chamada do dia;
  
- -Opção para cadastrar o cartão se não estiver registrado;
+ -Opção para chamar o método de cadastrar o cartão em questão quando tentar responder chamada e não estiver registrado;
  
  -Script para lançar na planilha os dados guardados offline;
  
