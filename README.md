@@ -5,7 +5,11 @@ Documento editado neste exemplo:
 
 https://docs.google.com/spreadsheets/d/1zS383tcuZqP1TerYZ5xqgfT9dS71JjeLaZ-Df8jzbvE/
 
-### 1. Instale o python 2.7 ou superior:
+### 1. Instale os drivers do leitor:
+
+http://www.acs.com.hk/en/driver/3/acr122u-usb-nfc-reader/
+
+### 2. Instale o python 2.7 ou superior:
 
 #### windows:
 
@@ -23,7 +27,7 @@ $env:path="$env:Path;C:\Python27"
 sudo apt-get install python
 ```
 
-### 2. Instale Swig:
+### 3. Instale Swig:
 
 #### windows: 
 
@@ -40,7 +44,7 @@ https://www.microsoft.com/en-us/download/details.aspx?id=44266
 sudo apt-get install swig
 ```
 
-### 3. Instale as bibliotecas pyscard, httplib2, oauth2client e gspread:
+### 4. Instale as bibliotecas pyscard, httplib2, oauth2client e gspread:
   ```  
   pip install pyscard gspread httplib2 oauth2client
   ```
@@ -54,7 +58,7 @@ sudo apt-get install swig
 $env:path="$env:Path;C:\Python27\Scripts"
 ```
   
-### 4. Para editar outra planilha, siga esses passos iniciais para configurar a google api (tem um gif):
+### 5. Para editar outra planilha, siga esses passos iniciais para configurar a google api (tem um gif):
 https://www.twilio.com/blog/2017/02/an-easy-way-to-read-and-write-to-a-google-spreadsheet-in-python.html
 
 OBS: ainda não implementei aceitação de utf-8, então planilhas com acentos ou ç não vão poder ser acessadas por enquanto.
