@@ -8,7 +8,7 @@ from smartcard.scard import *
 def cadastraCodigo():
 	a = 0
 	print "CADASTRAR CODIGO"
-	colunaMatriculas = 2
+	colunaMatriculas = 2 #editar isso e colocar a coluna em que estao as matriculas na planilha
 	presenca = raw_input("Lancar presenca apos cadastrar? (S/n): ")
 	presenca = presenca.upper()
 	if presenca != "N":
