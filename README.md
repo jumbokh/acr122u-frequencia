@@ -1,4 +1,7 @@
 # acr122u-frequencia
+
+Este script é utilizado para registrar a presença de um aluno a partir de um leitor NFC e lançá-la em uma planilha do google. Ele também registra a presença e o cadastro de alunos no sistema em arquivos .txt fácilmente exportáveis para a planilha.
+
 ## Instruções ##
 
 Documento editado neste exemplo:
