@@ -13,7 +13,6 @@ https://docs.google.com/spreadsheets/d/1zS383tcuZqP1TerYZ5xqgfT9dS71JjeLaZ-Df8jz
   Caso não tenha pip:
   https://packaging.python.org/installing/
   
-3. Siga esses passos iniciais para configurar a google api (tem um gif):
+3. Para editar outra planilha, siga esses passos iniciais para configurar a google api (tem um gif):
 https://www.twilio.com/blog/2017/02/an-easy-way-to-read-and-write-to-a-google-spreadsheet-in-python.html
 
-4. Execute o script
