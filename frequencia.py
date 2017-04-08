@@ -11,12 +11,10 @@ def cadastraCodigo():
 	colunaMatriculas = 2
 	presenca = raw_input("Lancar presenca apos cadastrar? (S/n): ")
 	presenca = presenca.upper()
-
 	if presenca != "N":
 		presenca = True
 	else:
 		presenca = False
-
 	while True:
 		while True:
 			try:
@@ -33,7 +31,6 @@ def cadastraCodigo():
 			except (NameError):
 				print "Sistema offline. Utilizar cadastraOffline"
 				break
-
 		linha = a.row
 		codigo = leCodigo()		
 		sheet.update_cell(linha, 37, codigo)
@@ -44,7 +41,6 @@ def cadastraCodigo():
 
 def cadastraOffline():
 	dia = obtemDia()
-	
 	while True:
 		file = open("cadastrar/cadastro.txt", 'a')
 		matricula = raw_input("Digite sua matricula: ")
@@ -52,7 +48,6 @@ def cadastraOffline():
 		codigo = leCodigo()
 		file.write(matricula + ":"+ str(codigo) + ":" + dia + "\n")
 		print "cadastro offline concluido\n"
-
 
 def leCodigo(): #falta implementar conversao pra hex, ta devolvendo uma lista
 	print "Insira o cartao"
