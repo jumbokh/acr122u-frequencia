@@ -60,8 +60,13 @@ sudo apt-get install swig
 ```
 $env:path="$env:Path;C:\Python27\Scripts"
 ```
+### 5. Execute o arquivo navegando pelo terminal ou prompt de comando até a pasta em que ele se encontra e digitando:
+
+  ```
+  python frequencia.py
+  ```
   
-### 5. Para editar outra planilha, siga esses passos iniciais para configurar a google api (tem um gif):
+### 6. Para editar outra planilha, siga esses passos iniciais para configurar a google api (tem um gif):
 https://www.twilio.com/blog/2017/02/an-easy-way-to-read-and-write-to-a-google-spreadsheet-in-python.html
 
 OBS: ainda não implementei aceitação de utf-8, então planilhas com acentos ou ç não vão poder ser acessadas por enquanto.
