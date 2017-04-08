@@ -7,17 +7,35 @@ https://docs.google.com/spreadsheets/d/1zS383tcuZqP1TerYZ5xqgfT9dS71JjeLaZ-Df8jz
 
 ### 1. Instale o python 2.7 ou superior:
 
+#### windows:
+
 https://www.python.org/downloads/release/python-2713/
+ e defina path variables se necessário:
+
+digite no prompt de comando: 
+
+```
+$env:path="$env:Path;C:\Python27\Scripts"
+```
+
+#### linux:
+```
+sudo apt-get install python
+```
 
 ### 2. Instale Swig:
 
-windows: 
+#### windows: 
 
 http://www.swig.org/download.html e defina path variable
+
+(mesma lógica do caso acima, é só colocar o diretório dele no lugar do diretório do python)
+
 Instale Visual c++ compiler pra python: 
+
 https://www.microsoft.com/en-us/download/details.aspx?id=44266
 
-linux:
+#### linux:
 ```
 sudo apt-get install swig
 ```
@@ -33,5 +51,7 @@ sudo apt-get install swig
 ### 4. Para editar outra planilha, siga esses passos iniciais para configurar a google api (tem um gif):
 https://www.twilio.com/blog/2017/02/an-easy-way-to-read-and-write-to-a-google-spreadsheet-in-python.html
 
-OBS: ainda não implementei aceitação de utf-8, então planilhas com acentos ou ç não vão poder ser acessadas por enquanto
+OBS: ainda não implementei aceitação de utf-8, então planilhas com acentos ou ç não vão poder ser acessadas por enquanto.
+
+OBS: no caso do seu linux ser de uma distro não debian-based, substitua apt-get por seu gerenciador de pacotes correspondente.
 
