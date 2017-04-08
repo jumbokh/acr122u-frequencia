@@ -73,3 +73,13 @@ OBS: ainda não implementei aceitação de utf-8, então planilhas que tenham ac
 
 OBS: no caso do seu linux ser de uma distro não debian-based, substitua apt-get por seu gerenciador de pacotes correspondente.
 
+### Próximas atualizações previstas:
+
+ -Método para colocar 0 para todos os alunos na coluna do dia em questão antes de iniciar a chamada do dia;
+ 
+ -Opção para cadastrar o cartão se não estiver registrado;
+ 
+ -Script para lançar na planilha os dados guardados offline;
+ 
+ -Otimizações em geral.
+ 
