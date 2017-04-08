@@ -10,12 +10,12 @@ https://docs.google.com/spreadsheets/d/1zS383tcuZqP1TerYZ5xqgfT9dS71JjeLaZ-Df8jz
 #### windows:
 
 https://www.python.org/downloads/release/python-2713/
- e defina path variables se necessário:
+ e defina path variable se necessário:
 
 digite no prompt de comando: 
 
 ```
-$env:path="$env:Path;C:\Python27\Scripts"
+$env:path="$env:Path;C:\Python27"
 ```
 
 #### linux:
@@ -47,6 +47,12 @@ sudo apt-get install swig
   Caso não tenha pip:
   
   https://packaging.python.org/installing/
+  
+  Caso use Windows, defina a path variable com:
+
+```
+$env:path="$env:Path;C:\Python27\Scripts"
+```
   
 ### 4. Para editar outra planilha, siga esses passos iniciais para configurar a google api (tem um gif):
 https://www.twilio.com/blog/2017/02/an-easy-way-to-read-and-write-to-a-google-spreadsheet-in-python.html
