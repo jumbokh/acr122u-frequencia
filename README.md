@@ -18,9 +18,9 @@ https://www.microsoft.com/en-us/download/details.aspx?id=44266
 linux:
 sudo apt-get install swig
 
-3. Instale as bibliotecas pyscard e gspread:
+3. Instale as bibliotecas pyscard, httplib2, oauth2client e gspread:
   ``` 
-  pip install pyscard gspread 
+  pip install pyscard gspread httplib2 oauth2client
   ```
   Caso não tenha pip:
   https://packaging.python.org/installing/
