@@ -115,6 +115,9 @@ def salvaTxt(codigo, dia):
 	file = open("chamadas/"+str(dia)+".txt", 'a')
 	file.write(str(codigo)+ "\n")
 
+###INICIO
+nomeDaPlanilha = "Copia de Presenca_DCC122_2016_3"
+
 try:
 	# use creds to create a client to interact with the Google Drive API
 	scope = ['https://spreadsheets.google.com/feeds']
@@ -122,7 +125,7 @@ try:
 	client = gspread.authorize(creds)
 
 	# Find a workbook by name and open the first sheet
-	sheet = client.open("Copia de Presenca_DCC122_2016_3").sheet1
+	sheet = client.open(nomeDaPlanilha).sheet1
 except (httplib2.ServerNotFoundError):
 	print ("Sistema offline")
 	offline = True
