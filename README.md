@@ -90,9 +90,11 @@ OBS: no caso do seu linux ser de uma distro não debian-based, substitua apt-get
 
  -Colocar 0 para todos os alunos na coluna do dia em questão antes de iniciar a chamada do dia;
  
+ -Apagar o naoLancadas.txt após o lançamento na planilha;
+ 
  -Opção para chamar o método de cadastrar o cartão em questão quando tentar responder chamada e não estiver registrado;
  
- -Implementar um setup.py pra definir os dados da planilha para edição
+ -Implementar um setup.py pra definir os dados da planilha para edição;
  
  -Otimizações em geral.
  
