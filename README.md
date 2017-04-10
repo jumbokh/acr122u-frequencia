@@ -1,6 +1,11 @@
 # acr122u-frequencia
 
+#### frequencia.py:
 Este script é utilizado para registrar a presença de um aluno a partir de um leitor NFC e lançá-la em uma planilha do google. Ele também registra a presença e o cadastro de alunos no sistema em arquivos .txt fácilmente exportáveis para a planilha.
+
+#### lancador.py:
+Lança na planilha os cadastros e presenças armazenados offline.
+
 
 ## Instruções ##
 
@@ -69,17 +74,23 @@ $env:path="$env:Path;C:\Python27\Scripts"
 ### 6. Para editar outra planilha, siga esses passos iniciais para configurar a google api (tem um gif):
 https://www.twilio.com/blog/2017/02/an-easy-way-to-read-and-write-to-a-google-spreadsheet-in-python.html
 
+Em seguida, modifique as variáveis:
+
+```
+nomedaPlanilha
+colunaMatriculas
+colunaCodigos
+```
+
 OBS: ainda não implementei aceitação de utf-8, então planilhas que tenham acentos ou ç no título não vão poder ser acessadas por enquanto.
 
 OBS: no caso do seu linux ser de uma distro não debian-based, substitua apt-get por seu gerenciador de pacotes correspondente.
 
 ### Próximas atualizações previstas:
 
- -Método para colocar 0 para todos os alunos na coluna do dia em questão antes de iniciar a chamada do dia;
+ -Colocar 0 para todos os alunos na coluna do dia em questão antes de iniciar a chamada do dia;
  
  -Opção para chamar o método de cadastrar o cartão em questão quando tentar responder chamada e não estiver registrado;
- 
- -Script para lançar na planilha os dados guardados offline;
  
  -Otimizações em geral.
  
