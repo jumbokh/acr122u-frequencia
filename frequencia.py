@@ -5,16 +5,17 @@ from oauth2client.service_account import ServiceAccountCredentials
 from datetime import date
 from smartcard.scard import *
 
-def cadastraCodigo():
+def cadastraCodigo(colunaMatriculas, colunaCodigos):
 	a = 0
-	print "CADASTRAR CODIGO"
-	colunaMatriculas = 2 #editar isso e colocar a coluna em que estao as matriculas na planilha
+	print "CADASTRAR CODIGO"	
 	presenca = raw_input("Lancar presenca apos cadastrar? (S/n): ")
 	presenca = presenca.upper()
+	
 	if presenca != "N":
 		presenca = True
 	else:
 		presenca = False
+	
 	while True:
 		while True:
 			try:
@@ -26,14 +27,16 @@ def cadastraCodigo():
 				else:
 					print "Matricula encontrada"
 					break
+			
 			except (gspread.exceptions.CellNotFound):
 				print "Matricula nao encontrada"
+			
 			except (NameError):
 				print "Sistema offline. Utilizar cadastraOffline"
-				break
+				break		
 		linha = a.row
 		codigo = leCodigo()		
-		sheet.update_cell(linha, 37, codigo)
+		sheet.update_cell(linha, colunaCodigos, codigo)
 		print "Codigo cadastrado\n"
 		if presenca:
 			lancaPresenca(str(codigo))
@@ -41,6 +44,7 @@ def cadastraCodigo():
 
 def cadastraOffline():
 	dia = obtemDia()
+	
 	while True:
 		file = open("cadastrar/cadastro.txt", 'a')
 		matricula = raw_input("Digite sua matricula: ")
@@ -51,7 +55,9 @@ def cadastraOffline():
 
 def leCodigo(): #falta implementar conversao pra hex, ta devolvendo uma lista
 	print "Insira o cartao"
+	
 	while True:
+		
 		try:
 			hresult, hcontext = SCardEstablishContext(SCARD_SCOPE_USER)
 			assert hresult==SCARD_S_SUCCESS
@@ -67,36 +73,43 @@ def leCodigo(): #falta implementar conversao pra hex, ta devolvendo uma lista
 			assert len(response) == 6
 			print "Cartao detectado"
 			return response
+		
 		except:
 			a=0 #qualquer coisa pra ocupar o except (preguica de ver como lidar com isso)
+		
 		time.sleep(0.5)
 
 def lancaPresenca(codigo = False): #parametro pra poder chamar do cadastro
 	dia = obtemDia()
 	breaksoon = False
+	
 	if codigo != False:	
 		breaksoon = True
-	#dia = "6-dez"
+	
 	while True:
 		print "\nLANCAR PRESENCA"
 		if (breaksoon == False):
 			codigo = str(leCodigo())
 		print "Buscando codigo na planilha"
+		
 		try:
 			coluna = sheet.find(dia).col
 			linha = sheet.find(codigo).row
+		
 		except (gspread.exceptions.CellNotFound):
 			print "Codigo ou dia invalido"
+		
 		except (NameError):
-			salvaTxt(codigo, dia)
+			salvaTxtNaoLancadas(codigo, dia)
 			print "Presenca lancada no txt"
 			print "Presenca NAO lancada na planilha"
 
 		else:
-			salvaTxt(codigo, dia)
+			salvaTxtLancadas(codigo, dia)
 			print "Presenca lancada no txt"
 			sheet.update_cell(linha, coluna, 1)
 			print "Presenca lancada na planilha\n"
+		
 		if breaksoon:
 			break
 		again = raw_input("Inserir outra? (S/n): ")
@@ -111,12 +124,20 @@ def obtemDia(): #pega o dia e converte pro formato que ta na planilha
 	hoje = str(hoje.day) + "-" + str(mes)
 	return hoje
 
-def salvaTxt(codigo, dia):
-	file = open("chamadas/"+str(dia)+".txt", 'a')
+def salvaTxtLancadas(codigo, dia):
+	file = open("chamadas/presencas lancadas/"+str(dia)+".txt", 'a')
 	file.write(str(codigo)+ "\n")
 
-###INICIO
+def salvaTxtNaoLancadas(codigo, dia):
+	file = open("chamadas/naoLancadas.txt", 'a')
+	file.write(str(codigo)+":"+str(dia) + "\n")
+
+### INICIO
+
+## DADOS DA PLANILHA
 nomeDaPlanilha = "Copia de Presenca_DCC122_2016_3"
+colunaMatriculas = 2 
+colunaCodigos = 37
 
 try:
 	# use creds to create a client to interact with the Google Drive API
@@ -126,13 +147,14 @@ try:
 
 	# Find a workbook by name and open the first sheet
 	sheet = client.open(nomeDaPlanilha).sheet1
+
 except (httplib2.ServerNotFoundError):
 	print ("Sistema offline")
 	offline = True
 
 operacao = raw_input("Insira a operacao a ser efetuada (cadastrar = 1, cadastraroff = 2, presenca = 3):\n")
 if operacao == "1":
-	cadastraCodigo()
+	cadastraCodigo(colunaMatriculas, colunaCodigos)
 elif operacao == "2":
 	cadastraOffline()
 elif operacao == "3":
