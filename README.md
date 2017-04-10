@@ -71,7 +71,7 @@ $env:path="$env:Path;C:\Python27\Scripts"
   python frequencia.py
   ```
   
-### 6. Para editar outra planilha, siga esses passos iniciais para configurar a google api (tem um gif):
+### 6. Para editar outra planilha, siga esses passos iniciais para configurar a google api (siga os passos até o segundo gif):
 https://www.twilio.com/blog/2017/02/an-easy-way-to-read-and-write-to-a-google-spreadsheet-in-python.html
 
 Em seguida, modifique nos arquivos frequencia.py e lancador.py as variáveis:
