@@ -82,9 +82,14 @@ colunaMatriculas
 colunaCodigos
 ```
 
-OBS: ainda não implementei aceitação de utf-8, então planilhas que tenham acentos ou ç no título não vão poder ser acessadas por enquanto.
+### OBS 1: 
+Para finalizar o programa, pressione Ctrl + C
 
-OBS: no caso do seu linux ser de uma distro não debian-based, substitua apt-get por seu gerenciador de pacotes correspondente.
+### OBS 2:
+ainda não implementei aceitação de utf-8, então planilhas que tenham acentos ou ç no título não vão poder ser acessadas por enquanto.
+
+### OBS 3:
+no caso do seu linux ser de uma distro não debian-based, substitua apt-get por seu gerenciador de pacotes correspondente.
 
 ### Próximas atualizações previstas:
 
