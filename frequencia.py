@@ -44,9 +44,8 @@ def cadastraCodigo(colunaMatriculas, colunaCodigos):
 
 def cadastraOffline():
 	dia = obtemDia()
-	
-	while True:
-		file = open("cadastrar/cadastro.txt", 'a')
+	file = open("cadastrar/cadastro.txt", 'a')
+	while True:		
 		matricula = raw_input("Digite sua matricula: ")
 		matricula = matricula.upper()
 		codigo = leCodigo()
@@ -117,6 +116,17 @@ def lancaPresenca(codigo = False): #parametro pra poder chamar do cadastro
 		if again == "N":
 			break
 
+def lancaPresencaOffline():
+	dia = obtemDia()		
+	while True:
+		print "\nLANCAR PRESENCA"		
+		codigo = str(leCodigo())
+		salvaTxtNaoLancadas(codigo, dia)
+		print "Presenca registrada\n"
+		proximo = raw_input("aperte ENTER para inserir")
+		
+
+
 def obtemDia(): #pega o dia e converte pro formato que ta na planilha
 	hoje = date.today()
 	meses = ("jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez")
@@ -152,13 +162,15 @@ except (httplib2.ServerNotFoundError):
 	print ("Sistema offline")
 	offline = True
 
-operacao = raw_input("Insira a operacao a ser efetuada (cadastrar = 1, cadastraroff = 2, presenca = 3):\n")
+operacao = raw_input("Insira a operacao a ser efetuada: \nCADASTRAR ONLINE = 1 \nCADASTRAR OFFLINE = 2 \nPRESENCA ONLINE = 3 \nPRESENCA OFFLINE = 4:\n")
 if operacao == "1":
 	cadastraCodigo(colunaMatriculas, colunaCodigos)
 elif operacao == "2":
 	cadastraOffline()
 elif operacao == "3":
 	lancaPresenca()
+elif operacao == "4":
+	lancaPresencaOffline()
 else: 
 	print "Opcao invalida."
 
