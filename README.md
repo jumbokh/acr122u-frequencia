@@ -1,7 +1,7 @@
 # acr122u-frequencia
 
 #### frequencia.py:
-Este script é utilizado para registrar a presença de um aluno a partir de um leitor NFC e lançá-la em uma planilha do google. Ele também registra a presença e o cadastro de alunos no sistema em arquivos .txt fácilmente exportáveis para a planilha.
+Este script utiliza um leitor NFC para registrar o código do cartão de um aluno e sua presença em uma aula e lançar ambos em uma planilha do google. Ele também registra a presença e o cadastro de alunos no sistema em arquivos .txt fácilmente exportáveis para a planilha.
 
 #### lancador.py:
 Lança na planilha os cadastros e presenças armazenados offline.
@@ -43,7 +43,7 @@ http://www.swig.org/download.html e defina path variable
 
 (mesma lógica do caso acima, é só colocar o diretório dele no lugar do diretório do python)
 
-Instale Visual c++ compiler pra python: 
+##### Instale Visual c++ compiler pra python: 
 
 https://www.microsoft.com/en-us/download/details.aspx?id=44266
 
@@ -74,7 +74,7 @@ $env:path="$env:Path;C:\Python27\Scripts"
 ### 6. Para editar outra planilha, siga esses passos iniciais para configurar a google api (tem um gif):
 https://www.twilio.com/blog/2017/02/an-easy-way-to-read-and-write-to-a-google-spreadsheet-in-python.html
 
-Em seguida, modifique as variáveis:
+Em seguida, modifique nos arquivos frequencia.py e lancador.py as variáveis:
 
 ```
 nomedaPlanilha
@@ -91,6 +91,8 @@ OBS: no caso do seu linux ser de uma distro não debian-based, substitua apt-get
  -Colocar 0 para todos os alunos na coluna do dia em questão antes de iniciar a chamada do dia;
  
  -Opção para chamar o método de cadastrar o cartão em questão quando tentar responder chamada e não estiver registrado;
+ 
+ -Implementar um setup.py pra definir os dados da planilha para edição
  
  -Otimizações em geral.
  
