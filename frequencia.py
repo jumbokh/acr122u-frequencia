@@ -3,8 +3,7 @@ import time
 import httplib2
 from oauth2client.service_account import ServiceAccountCredentials
 from datetime import date
-from smartcard.scard import *
-
+import subprocess
 def cadastraCodigo(colunaMatriculas, colunaCodigos):
 	a = 0
 	print "CADASTRAR CODIGO"	
@@ -52,31 +51,15 @@ def cadastraOffline():
 		file.write(matricula + ":"+ str(codigo) + ":" + dia + "\n")
 		print "cadastro offline concluido\n"
 
-def leCodigo(): #falta implementar conversao pra hex, ta devolvendo uma lista
+def leCodigo(): 
 	print "Insira o cartao"
-	
-	while True:
-		
-		try:
-			hresult, hcontext = SCardEstablishContext(SCARD_SCOPE_USER)
-			assert hresult==SCARD_S_SUCCESS
-			hresult, readers = SCardListReaders(hcontext, [])
-			assert len(readers)>0
-			reader = readers[0]
-			hresult, hcard, dwActiveProtocol = SCardConnect(
-			    hcontext,
-			    reader,
-			    SCARD_SHARE_SHARED,
-			    SCARD_PROTOCOL_T0 | SCARD_PROTOCOL_T1)
-			hresult, response = SCardTransmit(hcard,dwActiveProtocol,[0xFF,0xCA,0x00,0x00,0x00])
-			assert len(response) == 6
-			print "Cartao detectado"
-			return response
-		
-		except:
-			a=0 #qualquer coisa pra ocupar o except (preguica de ver como lidar com isso)
-		
-		time.sleep(0.5)
+	try:
+		saida = subprocess.check_output('sudo ./leCartao',shell=True)
+	except:
+		print "erro de sudo"
+	else:
+		return saida
+
 
 def lancaPresenca(codigo = False): #parametro pra poder chamar do cadastro
 	dia = obtemDia()
@@ -116,8 +99,8 @@ def lancaPresenca(codigo = False): #parametro pra poder chamar do cadastro
 		if again == "N":
 			break
 
-def lancaPresencaOffline():
-	dia = obtemDia()		
+def lancaPresencaOffline():	
+	dia = obtemDia()	
 	while True:
 		print "\nLANCAR PRESENCA"		
 		codigo = str(leCodigo())
@@ -143,7 +126,6 @@ def salvaTxtNaoLancadas(codigo, dia):
 	file.write(str(codigo)+":"+str(dia) + "\n")
 
 ### INICIO
-
 ## DADOS DA PLANILHA
 nomeDaPlanilha = "Copia de Presenca_DCC122_2016_3"
 colunaMatriculas = 2 
