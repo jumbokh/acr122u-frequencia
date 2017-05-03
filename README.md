@@ -11,11 +11,15 @@ Documento editado neste exemplo:
 
 https://docs.google.com/spreadsheets/d/1zS383tcuZqP1TerYZ5xqgfT9dS71JjeLaZ-Df8jzbvE/
 
+### Instalar a WiringOP:
+
+https://github.com/zhaolei/WiringOP
+
 ### Ativar as portas:
 https://docs.armbian.com/harware_allwinner
 ativar a uart3
 Tomar cuidado ao usar o fex2bin (descrito no link acima) para salvar o setup.bin no local correto.
-Para verificar quais são as portas no orange, basta ver as especificações já impressas ou digitar no terminal: 
+Para verificar quais são as portas no orange com suas correspondências para a WiringOP, basta digitar no terminal: 
 
 ```gpio readall```
 
