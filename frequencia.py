@@ -137,7 +137,7 @@ def cadastraOffline():
 				return(-1)	
 			matricula = raw_input("Digite sua matricula: ")
 			matricula = matricula.upper()
-			codigo = leCodigoStub()
+			codigo = leCodigo() #substituir por leCodigoStub para testes sem o leitor
 			file.write(matricula + ":"+ str(codigo) + ":" + dia + "\n")
 			print "cadastro offline concluido\n"
 
@@ -150,7 +150,7 @@ def lancaPresencaOffline():
 		proximo = proximo.upper()
 		if (proximo=="CAD"):
 			return(-2)	
-		codigo = str(leCodigoStub())
+		codigo = str(leCodigo())#substituir por leCodigoStub para testes sem o leitor
 		salvaTxtNaoLancadas(codigo, dia)
 		print "Presenca registrada\n"
 		
