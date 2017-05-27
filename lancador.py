@@ -3,32 +3,30 @@ import httplib2
 from oauth2client.service_account import ServiceAccountCredentials
 
 def lancaPresenca(colunaMatriculas): 
-	file = open("chamadas/naoLancadas.txt", 'r')
-	
-	colunaMatriculas = 2
+
 	a = 0
 	numLinha = 1
-
-	for line in file:
-		line = line.strip()
-		linhaAtual = line.split(":")
-		dia = linhaAtual[1]
-		codigo = linhaAtual[0]
-		file2 = open("chamadas/presencas lancadas/"+dia+".txt", 'a')
-		print "Buscando codigo " + str(numLinha) + " na planilha"
-		try:
-			coluna = sheet.find(dia).col
-			linha = sheet.find(codigo).row
-		except (gspread.exceptions.CellNotFound):
-			print "Codigo ou dia invalido"
-		except (NameError):
-			print "Sistema Offline"
-		else:
-			sheet.update_cell(linha, coluna, 1)
-			print "Presenca lancada na planilha"
-			file2.write(str(codigo)+ "\n")
-			print "Presenca lancado no txt\n"
-		numLinha += 1
+	with open("chamadas/naoLancadas.txt", 'r') as file:
+		for line in file:
+			line = line.strip()
+			linhaAtual = line.split(":")
+			dia = linhaAtual[1]
+			codigo = linhaAtual[0]
+			with open("chamadas/presencas lancadas/"+dia+".txt", 'a') as file2:
+				print "Buscando codigo " + str(numLinha) + " na planilha"
+				try:
+					coluna = sheet.find(dia).col
+					linha = sheet.find(codigo).row
+				except (gspread.exceptions.CellNotFound):
+					print "Codigo ou dia invalido"
+				except (NameError):
+					print "Sistema Offline"
+				else:
+					sheet.update_cell(linha, coluna, 1)
+					print "Presenca lancada na planilha"
+					file2.write(str(codigo)+ "\n")
+					print "Presenca lancado no txt\n"
+				numLinha += 1
 
 
 
@@ -36,37 +34,35 @@ def lancaCadastro(colunaMatriculas, colunaCodigos):
 	a = 0
 
 	numLinha = 1
-	file = open("cadastrar/cadastro.txt", 'r')
-	file2 = open("chamadas/naoLancadas.txt", 'a')
-
-	for line in file:
-		naoEncontrada = False
-		line = line.strip() #tira o \n
-		linhaAtual = line.split(":")
-		matricula = linhaAtual[0]
-		dia = linhaAtual[2]
-		codigo = linhaAtual[1]
-				
-		try:
-			a = sheet.find(matricula)
-			if a.col != colunaMatriculas:
+	with open("cadastrar/cadastro.txt", 'r') as file, open("chamadas/naoLancadas.txt", 'a') as file2:
+		for line in file:
+			naoEncontrada = False
+			line = line.strip() #tira o \n
+			linhaAtual = line.split(":")
+			matricula = linhaAtual[0]
+			dia = linhaAtual[2]
+			codigo = linhaAtual[1]
+					
+			try:
+				a = sheet.find(matricula)
+				if a.col != colunaMatriculas:
+					print "Matricula " + str(numLinha) + " NAO encontrada"
+					naoEncontrada = True
+				else:
+					print "Matricula " + str(numLinha) + " encontrada"
+			except (gspread.exceptions.CellNotFound):
 				print "Matricula " + str(numLinha) + " NAO encontrada"
 				naoEncontrada = True
-			else:
-				print "Matricula " + str(numLinha) + " encontrada"
-		except (gspread.exceptions.CellNotFound):
-			print "Matricula " + str(numLinha) + " NAO encontrada"
-			naoEncontrada = True
-		except (NameError):
-			print "Sistema offline."
-		if (naoEncontrada == False):
-			linha = a.row	
-			sheet.update_cell(linha, colunaCodigos, codigo)
-			print "Codigo " + str(numLinha) + " cadastrado"
-			file2.write(codigo+":"+ dia + "\n")	
-			print "Presenca " + str(numLinha) + " cadastrada em naoLancadas.txt"
-		numLinha += 1
-		print "\n"
+			except (NameError):
+				print "Sistema offline."
+			if (naoEncontrada == False):
+				linha = a.row	
+				sheet.update_cell(linha, colunaCodigos, codigo)
+				print "Codigo " + str(numLinha) + " cadastrado"
+				file2.write(codigo+":"+ dia + "\n")	
+				print "Presenca " + str(numLinha) + " cadastrada em naoLancadas.txt"
+			numLinha += 1
+			print "\n"
 
 ## INCIO
 
@@ -85,6 +81,7 @@ try:
 	sheet = client.open(nomedaPlanilha).sheet1
 except (httplib2.ServerNotFoundError):
 	print ("Sistema offline")
+	exit()
 
 operacao = raw_input("Insira a operacao a ser efetuada (lancarPresenca = 1, lancarCadastro = 2):\n")
 if operacao == "1":

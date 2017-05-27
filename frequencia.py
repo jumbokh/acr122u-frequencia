@@ -1,10 +1,12 @@
-import gspread
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 import time
-import httplib2
-from oauth2client.service_account import ServiceAccountCredentials
 from datetime import date
 from smartcard.scard import *
 
+
+#REMOVIDOS POR NÃO SER EFICAZ LANÇAR ONLINE DIRETO (LEVA TEMPO E A AUTENTICAÇÃO EXPIRA DEPOIS DE ALGUNS MINUTOS DE EXECUÇÃO)
+"""
 def cadastraCodigo(colunaMatriculas, colunaCodigos):
 	a = 0
 	print "CADASTRAR CODIGO"	
@@ -41,43 +43,9 @@ def cadastraCodigo(colunaMatriculas, colunaCodigos):
 		if presenca:
 			lancaPresenca(str(codigo))
 		print "CADASTRAR CODIGO"	
+"""
 
-def cadastraOffline():
-	dia = obtemDia()
-	file = open("cadastrar/cadastro.txt", 'a')
-	while True:		
-		matricula = raw_input("Digite sua matricula: ")
-		matricula = matricula.upper()
-		codigo = leCodigo()
-		file.write(matricula + ":"+ str(codigo) + ":" + dia + "\n")
-		print "cadastro offline concluido\n"
-
-def leCodigo(): #falta implementar conversao pra hex, ta devolvendo uma lista
-	print "Insira o cartao"
-	
-	while True:
-		
-		try:
-			hresult, hcontext = SCardEstablishContext(SCARD_SCOPE_USER)
-			assert hresult==SCARD_S_SUCCESS
-			hresult, readers = SCardListReaders(hcontext, [])
-			assert len(readers)>0
-			reader = readers[0]
-			hresult, hcard, dwActiveProtocol = SCardConnect(
-			    hcontext,
-			    reader,
-			    SCARD_SHARE_SHARED,
-			    SCARD_PROTOCOL_T0 | SCARD_PROTOCOL_T1)
-			hresult, response = SCardTransmit(hcard,dwActiveProtocol,[0xFF,0xCA,0x00,0x00,0x00])
-			assert len(response) == 6
-			print "Cartao detectado"
-			return response
-		
-		except:
-			a=0 #qualquer coisa pra ocupar o except (preguica de ver como lidar com isso)
-		
-		time.sleep(0.5)
-
+""" 
 def lancaPresenca(codigo = False): #parametro pra poder chamar do cadastro
 	dia = obtemDia()
 	breaksoon = False
@@ -115,17 +83,78 @@ def lancaPresenca(codigo = False): #parametro pra poder chamar do cadastro
 		again = again.upper()
 		if again == "N":
 			break
+"""
+
+
+
+def codigoParser(codigo):
+	codigoParsed = 0
+	for i in range(0,6):
+		codigoParsed += codigo[i]*(pow(10,3*(5-i)))
+	return hex(codigoParsed)
+
+
+def leCodigo(): 
+	print "Insira o cartao"
+	
+	while True:
+		
+		try:
+			hresult, hcontext = SCardEstablishContext(SCARD_SCOPE_USER)
+			assert hresult==SCARD_S_SUCCESS
+			hresult, readers = SCardListReaders(hcontext, [])
+			assert len(readers)>0
+			reader = readers[0]
+			hresult, hcard, dwActiveProtocol = SCardConnect(
+			    hcontext,
+			    reader,
+			    SCARD_SHARE_SHARED,
+			    SCARD_PROTOCOL_T0 | SCARD_PROTOCOL_T1)
+			hresult, response = SCardTransmit(hcard,dwActiveProtocol,[0xFF,0xCA,0x00,0x00,0x00])
+			assert len(response) == 6
+			print "Cartao detectado"
+			return codigoParser(response)
+		except KeyboardInterrupt:
+			raise
+		except:
+			pass
+		
+		time.sleep(0.5)
+
+def leCodigoStub(): #usado para testes sem leitor
+	a = [243,43,43,23,12,43]
+	return codigoParser(a)
+
+
+def cadastraOffline():
+	dia = obtemDia()
+	with open("cadastrar/cadastro.txt", 'a') as file:
+		while True:		
+			print"\nCADASTRAR CARTAO"
+			proximo = raw_input("aperte ENTER para CADASTRAR E LANCAR PRESENCA, digite PRES para SOMENTE PRESENCA:\n")
+			proximo = proximo.upper()
+			if (proximo=="PRES"):
+				return(-1)	
+			matricula = raw_input("Digite sua matricula: ")
+			matricula = matricula.upper()
+			codigo = leCodigoStub()
+			file.write(matricula + ":"+ str(codigo) + ":" + dia + "\n")
+			print "cadastro offline concluido\n"
+
 
 def lancaPresencaOffline():
 	dia = obtemDia()		
 	while True:
-		print "\nLANCAR PRESENCA"		
-		codigo = str(leCodigo())
+		print "\nLANCAR PRESENCA"	
+		proximo = raw_input("aperte ENTER para PRESENCA, digite CAD para CADASTRO:\n")
+		proximo = proximo.upper()
+		if (proximo=="CAD"):
+			return(-2)	
+		codigo = str(leCodigoStub())
 		salvaTxtNaoLancadas(codigo, dia)
 		print "Presenca registrada\n"
-		proximo = raw_input("aperte ENTER para inserir")
 		
-
+		
 
 def obtemDia(): #pega o dia e converte pro formato que ta na planilha
 	hoje = date.today()
@@ -135,43 +164,32 @@ def obtemDia(): #pega o dia e converte pro formato que ta na planilha
 	return hoje
 
 def salvaTxtLancadas(codigo, dia):
-	file = open("chamadas/presencas lancadas/"+str(dia)+".txt", 'a')
-	file.write(str(codigo)+ "\n")
+	with open("chamadas/presencas lancadas/"+str(dia)+".txt", 'a') as file:
+		file.write(str(codigo)+ "\n")
+
 
 def salvaTxtNaoLancadas(codigo, dia):
-	file = open("chamadas/naoLancadas.txt", 'a')
-	file.write(str(codigo)+":"+str(dia) + "\n")
+	with open("chamadas/naoLancadas.txt", 'a') as file:
+		file.write(str(codigo)+":"+str(dia) + "\n")
+
 
 ### INICIO
 
-## DADOS DA PLANILHA
-nomeDaPlanilha = "Copia de Presenca_DCC122_2016_3"
-colunaMatriculas = 2 
-colunaCodigos = 37
-
-try:
-	# use creds to create a client to interact with the Google Drive API
-	scope = ['https://spreadsheets.google.com/feeds']
-	creds = ServiceAccountCredentials.from_json_keyfile_name('client_secret.json', scope)
-	client = gspread.authorize(creds)
-
-	# Find a workbook by name and open the first sheet
-	sheet = client.open(nomeDaPlanilha).sheet1
-
-except (httplib2.ServerNotFoundError):
-	print ("Sistema offline")
-	offline = True
-
-operacao = raw_input("Insira a operacao a ser efetuada: \nCADASTRAR ONLINE = 1 \nCADASTRAR OFFLINE = 2 \nPRESENCA ONLINE = 3 \nPRESENCA OFFLINE = 4:\n")
+operacao = raw_input("Insira a operacao a ser efetuada: \nCADASTRAR OFFLINE = 1 \nPRESENCA OFFLINE = 2:\n")
 if operacao == "1":
-	cadastraCodigo(colunaMatriculas, colunaCodigos)
+	shuffle = cadastraOffline()
 elif operacao == "2":
-	cadastraOffline()
-elif operacao == "3":
-	lancaPresenca()
-elif operacao == "4":
-	lancaPresencaOffline()
+	shuffle = lancaPresencaOffline()
+#elif operacao == "3":
+	#lancaPresenca()
+#elif operacao == "4":	
+	#cadastraCodigo(colunaMatriculas, colunaCodigos)
 else: 
 	print "Opcao invalida."
+while True:
+	if (shuffle == -1):
+		shuffle = lancaPresencaOffline()
+	elif (shuffle == -2):
+		shuffle = cadastraOffline()
 
 	
