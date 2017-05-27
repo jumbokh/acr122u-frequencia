@@ -6,7 +6,8 @@ Este script utiliza um leitor NFC para registrar o código do cartão de um alun
 #### lancador.py:
 Lança na planilha os cadastros e presenças armazenados offline.
 
-### Funcionamento em Geral:
+
+## Funcionamento em Geral:
 
 O programa frequencia.py armazena os cadastros (matrícula, código e dia) e as presenças (matrícula e dia) em "cadastrar/cadastro.txt" e "chamadas/naoLancadas.txt", respectivamente.
 
@@ -15,6 +16,7 @@ O programa lancador.py, na função "lançar cadastro" lê o cadastro.txt e lan�
 Na função "lançar presença", ele lança na planilha as presenças registradas no naoLancadas.txt e salva as presenças lançadas em arquivos de texto correspondentes a cada dia de chamada em "chamadas/presencas lancadas" para fins de registro.
 
 #### APÓS VERIFICAR QUE OS LANÇAMENTOS FORAM FEITOS CORRETAMENTE, EXCLUIR OS ARQUIVOS CADASTRO.TXT E NAOLANCADAS.TXT
+
 
 ## Instruções ##
 
