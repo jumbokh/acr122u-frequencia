@@ -1,11 +1,20 @@
 # acr122u-frequencia
 
 #### frequencia.py:
-Este script utiliza um leitor NFC para registrar o código do cartão de um aluno e sua presença em uma aula e lançar ambos em uma planilha do google. Ele também registra a presença e o cadastro de alunos no sistema em arquivos .txt fácilmente exportáveis para a planilha.
+Este script utiliza um leitor NFC para registrar o código do cartão de um aluno e sua presença em uma aula e lançar ambos em arquivos .txt fácilmente exportáveis para uma planilha do Google.
 
 #### lancador.py:
 Lança na planilha os cadastros e presenças armazenados offline.
 
+### Funcionamento em Geral:
+
+O programa frequencia.py armazena os cadastros (matrícula, código e dia) e as presenças (matrícula e dia) em "cadastrar/cadastro.txt" e "chamadas/naoLancadas.txt", respectivamente.
+
+
+O programa lancador.py, na função "lançar cadastro" lê o cadastro.txt e lança os códigos na planilha; em seguida lança cada matrícula (com o dia em que foi feito o cadastro de cada uma) em naoLancadas.txt.
+Na função "lançar presença", ele lança na planilha as presenças registradas no naoLancadas.txt e salva as presenças lançadas em arquivos de texto correspondentes a cada dia de chamada em "chamadas/presencas lancadas" para fins de registro.
+
+#### APÓS VERIFICAR QUE OS LANÇAMENTOS FORAM FEITOS CORRETAMENTE, EXCLUIR OS ARQUIVOS CADASTRO.TXT E NAOLANCADAS.TXT
 
 ## Instruções ##
 
@@ -88,9 +97,6 @@ colunaCodigos
 Para finalizar o programa, pressione Ctrl + C
 
 ### OBS 2:
-ainda não implementei aceitação de utf-8, então planilhas que tenham acentos ou ç no título não vão poder ser acessadas por enquanto.
-
-### OBS 3:
 no caso do seu linux ser de uma distro não debian-based, substitua apt-get por seu gerenciador de pacotes correspondente.
 
 ### Próximas atualizações previstas:
@@ -98,10 +104,6 @@ no caso do seu linux ser de uma distro não debian-based, substitua apt-get por 
  -Colocar 0 para todos os alunos na coluna do dia em questão antes de iniciar a chamada do dia;
  
  -Apagar o naoLancadas.txt após o lançamento na planilha;
- 
- -Opção para chamar o método de cadastrar o cartão em questão quando tentar responder chamada e não estiver registrado;
- 
- -Implementar um setup.py pra definir os dados da planilha para edição;
  
  -Otimizações em geral.
  
