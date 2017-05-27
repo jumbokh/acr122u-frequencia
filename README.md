@@ -9,10 +9,10 @@ Lança na planilha os cadastros e presenças armazenados offline.
 
 ## Funcionamento em Geral:
 
-O programa frequencia.py armazena os cadastros (matrícula, código e dia) e as presenças (matrícula e dia) em "cadastrar/cadastro.txt" e "chamadas/naoLancadas.txt", respectivamente.
+O programa frequencia.py armazena os cadastros (matrícula, código e dia) e as presenças (código e dia) em "cadastrar/cadastro.txt" e "chamadas/naoLancadas.txt", respectivamente.
 
 
-O programa lancador.py, na função "lançar cadastro" lê o cadastro.txt e lança os códigos na planilha; em seguida lança cada matrícula (com o dia em que foi feito o cadastro de cada uma) em naoLancadas.txt.
+O programa lancador.py, na função "lançar cadastro" lê o cadastro.txt e lança os códigos na planilha na linha correspondente matrícula de cada um; em seguida lança o código de cada matrícula (com o dia em que foi feito o cadastro de cada uma) em naoLancadas.txt.
 Na função "lançar presença", ele lança na planilha as presenças registradas no naoLancadas.txt e salva as presenças lançadas em arquivos de texto correspondentes a cada dia de chamada em "chamadas/presencas lancadas" para fins de registro.
 
 #### APÓS VERIFICAR QUE OS LANÇAMENTOS FORAM FEITOS CORRETAMENTE, EXCLUIR OS ARQUIVOS CADASTRO.TXT E NAOLANCADAS.TXT
