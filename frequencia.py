@@ -3,7 +3,9 @@
 import time
 from datetime import date
 from smartcard.scard import *
-
+#import gspread
+#import httplib2
+#from oauth2client.service_account import ServiceAccountCredentials
 
 #REMOVIDOS POR NÃO SER EFICAZ LANÇAR ONLINE DIRETO (LEVA TEMPO E A AUTENTICAÇÃO EXPIRA DEPOIS DE ALGUNS MINUTOS DE EXECUÇÃO)
 """
@@ -87,7 +89,7 @@ def lancaPresenca(codigo = False): #parametro pra poder chamar do cadastro
 
 
 
-def codigoParser(codigo):
+def codigoParser(codigo): #pega a lista que o leitor retorna e converte pra um número hexadecimal
 	codigoParsed = 0
 	for i in range(0,6):
 		codigoParsed += codigo[i]*(pow(10,3*(5-i)))
@@ -156,7 +158,7 @@ def lancaPresencaOffline():
 		
 		
 
-def obtemDia(): #pega o dia e converte pro formato que ta na planilha
+def obtemDia(): #pega o dia e converte pro formato que tá na planilha
 	hoje = date.today()
 	meses = ("jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez")
 	mes = meses[hoje.month-1]
@@ -186,6 +188,8 @@ elif operacao == "2":
 	#cadastraCodigo(colunaMatriculas, colunaCodigos)
 else: 
 	print "Opcao invalida."
+	
+#variando de funcionalidade durante a execução caso seja necessário
 while True:
 	if (shuffle == -1):
 		shuffle = lancaPresencaOffline()
