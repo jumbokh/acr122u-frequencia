@@ -43,8 +43,7 @@ def cadastraCodigo(colunaMatriculas, colunaCodigos):
         print "CADASTRAR CODIGO"
 
 
-
-def lancaPresenca(codigo = False):  # parametro pra poder chamar do cadastro
+def lancaPresenca(codigo=False):  # parametro pra poder chamar do cadastro
     dia = obtemDia()
     breaksoon = False
 
